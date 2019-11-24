@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
+
 '''
 #### problem 1-1. finding minimum ####
 
 Input:
   target change n
-  denomination D = [d1,...,dj] //  코인의 종류가 담긴 list
+  denomination D = [d1,...,dj]
 
 Temporary lists:
   M[n], denotes a minimum number of coins to make change of n SE380 cents.
@@ -19,13 +21,21 @@ def minchange_student(n, D):
     # initialize list.
     M = [0 for i in range(n + 1)]
     R = [[0 for col in range(len(D))] for row in range(n + 1)]
+    # previous provided code
 
-    # your code goes in here.#
+    ans = [0 for i in range(len(D)+1)]
+    temp = n
+    for i in range(len(D)):
+        ans[i+1] = temp//D[-(i+1)]
+        # 몫을 D[i] 요소에 업데이트함
+        temp = temp%D[-(i+1)]
+        # 나머지가 다시 temp가 됨
+    ans[0] = sum(ans)
+    # 리스트의 첫번째 원소는 나머지 원소들의 총합과 같다
+    # return R[n] 정답은 R[n]을 리턴해줘야함
+    return ans
 
-    #
-    R[0] = sum(R)  # 리스트의 첫번째 원소는 나머지 원소들의 총합과 같다
-    return R[n]
-
+print(minchange_student(100, [1,5,10,40]))
 
 '''
 #### problem 1-2. finding number of distinctive ways. ####
