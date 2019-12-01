@@ -22,11 +22,19 @@ def minchange_student(n, D):
     M = [0 for i in range(n + 1)]
     R = [[0 for col in range(len(D))] for row in range(n + 1)]
     # previous provided code
+    K = [[0 for i in range(n + 1)] for i in range(len(D))]
 
+    for i in range(0, n+1):
+        K[0][i] = i
 
-
-
-    return 0
+    for i in range(1,len(D)):
+        for j in range(0, n+1):
+            if (j == D[i]) or (j > D[i]):
+                K[i][j] = min(K[i-1][j], K[i][j-D[i]]+1)
+            else:
+                K[i][j] = K[i-1][j]
+    # range(2,11) 은 2부터 10까지 출력
+    return K[-1][-1]
 
 '''
 #### problem 1-2. finding number of distinctive ways. ####
@@ -57,7 +65,7 @@ def numways_student(n, D):
                 N[i][j] = N[i-1][j]+N[i][j-D[i]]
             else:
                 N[i][j] = N[i-1][j]
-    print(N)
+    #print(N)
     return N[len(D)-1][n]
 ''' n = 10 # 줘야하는 액수
     D = [1, 4, 7] # 코인의 종류
@@ -68,4 +76,6 @@ def numways_student(n, D):
 '''
 
 
-print(numways_student(10, [1, 4, 7]))
+#print(numways_student(10, [1, 4, 7]))
+
+print(minchange_student(15, [1,5,6,8]))
