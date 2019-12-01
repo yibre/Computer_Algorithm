@@ -13,7 +13,7 @@ Temporary lists:
 
 Output:
   Output shoud be a list, with following components.
-  [number_of_necessary_coins, coin1_num, coin2_num, ... , coinj_num]
+  [number_of_necessary_coins, coin1_num, coin2_num, ... , coinj_num] 리스트, 전체 코인의 숫자와 코인의 개수 별 종류
 '''
 
 
@@ -23,19 +23,10 @@ def minchange_student(n, D):
     R = [[0 for col in range(len(D))] for row in range(n + 1)]
     # previous provided code
 
-    ans = [0 for i in range(len(D)+1)]
-    temp = n
-    for i in range(len(D)):
-        ans[i+1] = temp//D[-(i+1)]
-        # 몫을 D[i] 요소에 업데이트함
-        temp = temp%D[-(i+1)]
-        # 나머지가 다시 temp가 됨
-    ans[0] = sum(ans)
-    # 리스트의 첫번째 원소는 나머지 원소들의 총합과 같다
-    # return R[n] 정답은 R[n]을 리턴해줘야함
-    return ans
+    
 
-print(minchange_student(100, [1,5,10,40]))
+
+    return 0
 
 '''
 #### problem 1-2. finding number of distinctive ways. ####
@@ -47,7 +38,7 @@ Input:
 Temporary lists:
   N[m][n], denotes a number of distinctive ways to make change of n SE380 cents with m kind of denominations.
 
-Output:
+Output: 얼마나 다양한 방법으로 지불할 수 있는가
   an integer value which denotes a number of distinctive ways to make change of n SE380 cents.
 '''
 
@@ -55,7 +46,26 @@ Output:
 def numways_student(n, D):
     # initialize list.
     N = [[0 for col in range(n + 1)] for row in range(len(D) + 1)]
-
     # your code goes in here.#
 
-    return N[len(D)][n]
+    for i in range(len(D)+1):
+        N[i][0] = 1
+
+    for i in range(len(D)):
+        for j in range(1, n+1):
+            if (j > D[i]) or (j == D[i]):
+                N[i][j] = N[i-1][j]+N[i][j-D[i]]
+            else:
+                N[i][j] = N[i-1][j]
+    print(N)
+    return N[len(D)-1][n]
+''' n = 10 # 줘야하는 액수
+    D = [1, 4, 7] # 코인의 종류
+    
+    백준 코드: n = 코인 종류의 개수 k = 전체 액수
+    coins = 우리 코드에서의 D와 같음
+    d[0] = 1
+'''
+
+
+print(numways_student(10, [1, 4, 7]))
