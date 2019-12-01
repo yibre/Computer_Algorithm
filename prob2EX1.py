@@ -17,7 +17,8 @@ def DP_Fish(tables, L, n):
 
     if (n == 0):
         return [0, 'A']
-
+    if (n < 0):
+        return [0, 'A']
     fishBefore = DP_Fish(tables, L, n - 1)[0]
     lakeBefore = DP_Fish(tables, L, n - 1)[1]
 
