@@ -23,7 +23,7 @@ def minchange_student(n, D):
     R = [[0 for col in range(len(D))] for row in range(n + 1)]
     # previous provided code
 
-    
+
 
 
     return 0
