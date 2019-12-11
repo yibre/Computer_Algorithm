@@ -15,8 +15,6 @@ Output:
   Output shoud be a list, with following components.
   [number_of_necessary_coins, coin1_num, coin2_num, ... , coinj_num] 리스트, 전체 코인의 숫자와 코인의 개수 별 종류
 '''
-
-
 def minchange_student(n, D):
     # initialize list.
     M = [0 for i in range(n + 1)]
@@ -34,7 +32,6 @@ def minchange_student(n, D):
     K[i][j]는 j 원일때 코인의 종류가 D[:i+1]까지 있다고 가정하고 최소한의 코인으로 지불할 수 있는 코인의 수입니다.
     ex) K[1][10] = 10원일때 1원짜리와 5원짜리로 10원을 최소한의 코인으로 지불하는데 필요한 코인의 수
     '''
-    print(K)
     for i in range(0, n+1):
         K[0][i] = i
 
@@ -74,8 +71,27 @@ def minchange_student(n, D):
     
     이와 같은 방식으로 마지막 코인의 열까지 전부 채워주면 마지막 행 마지막 열이 가장 해당 액수를 지불하는 가장 최소 코인의 수가 됩니다
     '''
-    return K[-1][-1]
+    return find_coins(K, len(D)-1, n, D)
 
+ # 이중 리스트를 거슬러 올라가며 list[i][j]가 어디에서 왔는지 찾고, 만약 D[i] 코인이 사용되었으면 이를 반환합니다
+
+def find_coins(list, i, j, D):
+    coins = []
+    while (list[i][j] != 0):
+        if list[i][j] == list[i-1][j]:
+            i = i-1
+        else:
+            coins.append(D[i])
+            j = j-D[i]
+    temp2 = coins
+    temp = [0 for i in range(len(D))]
+
+    for k in range(len(temp2)):
+        for i in range(len(D)):
+            if temp2[k] == D[i]:
+                temp[i] += 1
+
+    return temp
 '''
 #### problem 1-2. finding number of distinctive ways. ####
 
@@ -111,9 +127,22 @@ def numways_student(n, D):
                 N[i][j] = N[i-1][j]+N[i][j-D[i]]
             else: # case 2
                 N[i][j] = N[i-1][j]
-    print(N)
+    '''
+    N[i+1][j]는 j원을 D[0]~D[i] 까지의 코인을 사용해서 지불할 수 있는 방법의 개수입니다
+    N=
+    [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+    [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3], 
+    [1, 1, 1, 1, 2, 2, 2, 3, 4, 4, 4], 
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+    N[-1][j]는 1원을 이용하여 지불할 수 있는 방법의 개수입니다.
+    
+    case 2의 경우, 총액 10원을 낸다고 할 때 4원으로 1~3원을 지불할 수 없으니 해당 열보다 한 칸 전, 즉 N[i-1][j] 열의
+    방법을 가져와야 합니다.
+    그러나 case 1의 경우, 4원 이상부터는 4원을 쓰는 방법과 해당 열의 한 칸 전 방법을 고수하는 두 가지 방법이 있으니
+    N[i][j] = N[i-1][j]+N[i][j-D[i]] 가 됩니다.
+    '''
     return N[len(D)-1][n]
 
-print(numways_student(10, [1, 4, 7]))
-
-#print(minchange_student(11, [1,5,6,8]))
+# test case
+# print(numways_student(10, [1, 4, 7]))
+# print(minchange_student(11, [1,5,6,8]))

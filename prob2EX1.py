@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import argparse
 import pickle as pk
 
@@ -9,6 +10,7 @@ tables_ex = {'A': [-1, 339, 165, 0, 35, 59, 203, 785, 867, 225, 905],
 # ex) [int, 'A'], [int, 'B']
 
 count = [0]
+
 def DP_Fish(tables, L, n):
     count[0] = count[0]+1
     fishA = tables['A'][n]
@@ -40,6 +42,8 @@ def DP_Fish(tables, L, n):
 
 
 if __name__ == "__main__":
+    '''
+    
     parser = argparse.ArgumentParser()
     parser.add_argument("--payment", type=int, default=3, help="payment for Polar bear")
     parser.add_argument("--days", type=int, default=10, help="How many days")
@@ -63,4 +67,6 @@ if __name__ == "__main__":
     # 수정함, 리스트 형식으로 output을 고침
 
     print("L : [{:d}] n : [{:d}] result : [{:d}]".format(L, n, result))
-    print(count[0])
+    
+    '''
+    print(DP_Fish(tables_ex, 10, 10))
